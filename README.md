@@ -5,7 +5,7 @@ These course materials are developed by [Panagiotis (Panos) Moutis](https://pana
 
 ## Description 
 
--The first part of this course introduces:
+- The first part of this course introduces:
   - the electricity market stakeholders (regulators, operators, generating companies, utilities),  
   - the functions of these markets (procuring energy, securing reliability, planning infrastructure) and
   - the evolving policy frameworks.
