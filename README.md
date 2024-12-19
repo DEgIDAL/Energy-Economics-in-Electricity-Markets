@@ -1,7 +1,7 @@
 # Energy-Economics-in-Electricity-Markets
 
-These course materials are developed by [Panagiotis(Panos) Moutis]([url](https://panay1ot1s.com/)) under the second part of the graduate course Energy Economics in Electricity Markets EE G3304 
-at City College of New York(CCNY). 
+These course materials are developed by [Panagiotis (Panos) Moutis](https://panay1ot1s.com/) under the second part of the graduate course **Energy Economics in Electricity Markets EE G3304** at City College of New York (CCNY).
+ 
 
 ## Description 
 
