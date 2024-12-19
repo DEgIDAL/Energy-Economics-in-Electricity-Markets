@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Notebook 1 Economic Dispatch, Unit Commitment, Long-term Energy Planning.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="economic-dispatch-unit-commitment-long-term-energy-planning">Economic Dispatch, Unit Commitment, Long-term Energy Planning</h1>
+<h3 id="optimization-problem">Optimization Problem</h3>
+<p><img src="fig1.1.png" alt="Optimization Problem"></p>
+<h3 id="economic-dispatch-without-constraints">Economic dispatch without constraints</h3>
+<p><img src="fig1.2.png" alt="ED_Non_Constrained"></p>
+<p><img src="fig1.3.png" alt="Vector of variables of the Problem"></p>
+<h3 id="ednonconstrained-code">ED_Non_Constrained Code</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">% upper and lower bounds of the variables</span>
+<span class="hljs-comment">% we make the intelligent guess that the renewables will be </span>
+<span class="hljs-comment">% fully dispatched since they are the cheapest and the </span>
+<span class="hljs-comment">% demand is much greater than their availability, hence we</span>
+<span class="hljs-comment">% will bound them exactly at their availability</span>
+xmax = [ <span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">0.5</span>,<span class="hljs-number">0.5</span>,<span class="hljs-number">0.05</span>,<span class="hljs-number">0.01</span>,<span class="hljs-number">0.03</span>,<span class="hljs-number">0.8</span>,<span class="hljs-number">0.8</span>,<span class="hljs-number">0.8</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>]; xmax=[xmax,xmax]; xmax(<span class="hljs-number">1</span>,<span class="hljs-number">28</span>:<span class="hljs-number">30</span>) = [<span class="hljs-number">0.02</span>,<span class="hljs-number">0.01</span>,<span class="hljs-number">0.02</span>];
+xmin = [<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">7</span>),<span class="hljs-number">0.05</span>,<span class="hljs-number">0.01</span>,<span class="hljs-number">0.03</span>,<span class="hljs-number">-0.8</span>,<span class="hljs-number">-0.8</span>,<span class="hljs-number">-0.8</span>,<span class="hljs-number">-1</span>,<span class="hljs-number">-1</span>,<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">5</span>)];xmin=[xmin,xmin];xmin(<span class="hljs-number">1</span>,<span class="hljs-number">28</span>:<span class="hljs-number">30</span>) = [<span class="hljs-number">0.02</span>,<span class="hljs-number">0.01</span>,<span class="hljs-number">0.02</span>];
+
+<span class="hljs-comment">% the first line is the equality of generation and demand </span>
+<span class="hljs-comment">% for active power for t=1</span>
+<span class="hljs-comment">% the secondline is the equality of generation and demand </span>
+<span class="hljs-comment">% for reactive power for t=1</span>
+<span class="hljs-comment">% the first line is the equality of generation and demand </span>
+<span class="hljs-comment">% for active power for t=2</span>
+<span class="hljs-comment">% the secondline is the equality of generation and demand </span>
+<span class="hljs-comment">% for reactive power for t=2</span>
+Aeq = [<span class="hljs-built_in">ones</span>(<span class="hljs-number">1</span>,<span class="hljs-number">10</span>),<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">30</span>);<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">10</span>),<span class="hljs-built_in">ones</span>(<span class="hljs-number">1</span>,<span class="hljs-number">10</span>),<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">20</span>);];
+Aeq = [Aeq; <span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">20</span>),<span class="hljs-built_in">ones</span>(<span class="hljs-number">1</span>,<span class="hljs-number">10</span>),<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">10</span>);<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">30</span>),<span class="hljs-built_in">ones</span>(<span class="hljs-number">1</span>,<span class="hljs-number">10</span>)];
+beq = [ <span class="hljs-number">5.5</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6.5</span>, <span class="hljs-number">4</span>];
+
+<span class="hljs-comment">% quadratic cost term expressed as a Hessian matrix</span>
+<span class="hljs-comment">% multiplying the quadratic terms by 2 due to the</span>
+<span class="hljs-comment">% Hessian operation per se</span>
+c2 = [<span class="hljs-number">0.01</span>, <span class="hljs-number">0.01</span>, <span class="hljs-number">0.01</span>, <span class="hljs-number">0.01</span>, <span class="hljs-number">0.01</span>, <span class="hljs-number">0.02</span>, <span class="hljs-number">0.02</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">10</span>)];
+c2=[c2,c2];
+H=<span class="hljs-number">2</span>*<span class="hljs-built_in">diag</span>(c2); <span class="hljs-comment">%min[(1/2)*x^Τ*H*x +...]</span>
+
+<span class="hljs-comment">% linear cost term</span>
+f = [<span class="hljs-number">0.04</span>, <span class="hljs-number">0.04</span>, <span class="hljs-number">0.04</span>, <span class="hljs-number">0.02</span>, <span class="hljs-number">0.02</span>, <span class="hljs-number">0.04</span>, <span class="hljs-number">0.04</span>, <span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">13</span>)]; f=[f,f];
+
+<span class="hljs-comment">% just transposing the line vectors that need to be </span>
+<span class="hljs-comment">% for the proper execution of the quadprog</span>
+<span class="hljs-comment">%f=f'; beq=beq'; xmin=xmin'; xmax=xmax';</span>
+
+<span class="hljs-comment">% execution of the optimizaion</span>
+x = quadprog(H,f,[],[],Aeq,beq,xmin,xmax)
+
+
+<span class="hljs-comment">% some checks to see that the dispatching is righ</span>
+<span class="hljs-comment">%[sum(x(1:10)), sum(x(11:20)), sum(x(21:30)), sum(x(31:40))]</span>
+
+<span class="hljs-comment">% the output should be the active power demand of hour 1,</span>
+<span class="hljs-comment">% the reactive power demand of hour 2, the active power</span>
+<span class="hljs-comment">% demand of hour 2, the reactive power demand of hour 2,</span>
+<span class="hljs-comment">% i.e. 5.5   3   6.5   4</span>
+</div></code></pre>
+<p><img src="image-10.png" alt="alt text"></p>
+<h3 id="adding-some-constraints-to-the-economic-dispatch-problem">Adding some constraints to the Economic Dispatch Problem</h3>
+<p><img src="fig1.4.png" alt="ED_Constrained"></p>
+<p><img src="fig1.5.png" alt="Ramp constraints"></p>
+<h3 id="ramp-constraint---matlab-formulation">Ramp constraint - Matlab Formulation</h3>
+<p><img src="fig1.6.png" alt="Ramp constraint Matlab 1"></p>
+<p><img src="fig1.7.png" alt="Ramp constraint Matlab 2"></p>
+<h3 id="energy-constraint-formulation">Energy Constraint Formulation</h3>
+<p><img src="fig1.8.png" alt="Energy Constraint"></p>
+<h3 id="edconstrained-code">ED_Constrained Code</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">% Inequality constraints for ramp-up rates</span>
+<span class="hljs-comment">% first active and reactive power for G1</span>
+<span class="hljs-comment">% then active and reactive power for G4</span>
+<span class="hljs-comment">% rows: # of constraints, columns: # of variables</span>
+Aineq=[<span class="hljs-number">-1</span>,<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">19</span>),<span class="hljs-number">1</span>,<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">19</span>)]; bineq=[<span class="hljs-number">0.1</span>];
+Aineq=[Aineq;<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">10</span>),<span class="hljs-number">-1</span>,<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">19</span>),<span class="hljs-number">1</span>,<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">9</span>)]; bineq=[bineq;<span class="hljs-number">0.08</span>];
+Aineq=[Aineq;<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">-1</span>,<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">19</span>),<span class="hljs-number">1</span>,<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">16</span>)]; bineq=[bineq;<span class="hljs-number">0.1</span>];
+Aineq=[Aineq;<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">13</span>),<span class="hljs-number">-1</span>,<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">19</span>),<span class="hljs-number">1</span>,<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">6</span>)]; bineq=[bineq;<span class="hljs-number">0.05</span>];
+
+Aineq=[Aineq;-Aineq];
+bineq=[bineq; bineq];
+
+<span class="hljs-comment">% execution of the optimization</span>
+x2 = quadprog(H_new,f_new,Aineq,bineq,Aeq_new,beq_new,xmin_new,xmax_new);
+display(x2)
+<span class="hljs-comment">%sum(x2(11:20))</span>
+<span class="hljs-comment">%sum(x2(31:40))</span>
+<span class="hljs-comment">% addint the energy constraint for G2</span>
+Aineq=[Aineq;<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">19</span>),<span class="hljs-number">1</span>,<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">18</span>)];
+bineq=[bineq;<span class="hljs-number">1</span>];
+
+<span class="hljs-comment">% execution of the optimization</span>
+x3 = quadprog(H_new,f_new,Aineq,bineq,Aeq_new,beq_new,xmin_new,xmax_new);
+display(x3);
+</div></code></pre>
+<p><img src="fig1.9.png" alt="Unit Commitment 1"></p>
+<p><img src="fig1.10.png" alt="Unit Commitment 2"></p>
+<p><img src="fig1.11.png" alt="Unit Commitment 3"></p>
+<p><img src="fig1.12.png" alt="Unit Commitment 4"></p>
+<h3 id="unit-commitment-code">Unit Commitment Code</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">% re-execution of the optimization as a </span>
+<span class="hljs-comment">% linear program, i.e. removing Hessian</span>
+
+x4=linprog(f,Aineq,bineq,Aeq,beq,xmin,xmax);
+display(x4)
+
+<span class="hljs-comment">% incorporating the binary variables for the operation </span>
+<span class="hljs-comment">% of generators</span>
+<span class="hljs-comment">% upper/lower bounds are set to 0/1 since the</span>
+<span class="hljs-comment">% integer variables have to be binary</span>
+xmin=[xmin;<span class="hljs-built_in">zeros</span>(<span class="hljs-number">20</span>,<span class="hljs-number">1</span>)]; xmax=[xmax;<span class="hljs-built_in">ones</span>(<span class="hljs-number">20</span>,<span class="hljs-number">1</span>)];
+<span class="hljs-comment">% updating the inequality and equality constraint </span>
+<span class="hljs-comment">% matrices with zeros for the new integer</span>
+<span class="hljs-comment">% variables</span>
+Aineq=[Aineq,<span class="hljs-built_in">zeros</span>(<span class="hljs-built_in">size</span>(Aineq,<span class="hljs-number">1</span>),<span class="hljs-number">20</span>)];
+Aeq=[Aeq,<span class="hljs-built_in">zeros</span>(<span class="hljs-built_in">size</span>(Aeq,<span class="hljs-number">1</span>),<span class="hljs-number">20</span>)];
+<span class="hljs-comment">% extending the linear cost vector with zeros for the</span>
+<span class="hljs-comment">% integer variables</span>
+f=[f;<span class="hljs-built_in">zeros</span>(<span class="hljs-number">20</span>,<span class="hljs-number">1</span>)];
+
+<span class="hljs-comment">% executing the integer programming</span>
+<span class="hljs-comment">%x = intlinprog(f,intcon,A,b,Aeq,beq,lb,ub)</span>
+<span class="hljs-comment">% </span>
+x5 = intlinprog(f,[<span class="hljs-number">41</span>:<span class="hljs-number">60</span>],Aineq,bineq,Aeq,beq,xmin,xmax);
+display(x5)
+
+<span class="hljs-comment">% extending the inequality constraints matrix to </span>
+<span class="hljs-comment">% include the effect of the binary variables on</span>
+<span class="hljs-comment">% whether the generator is ON/OFF</span>
+<span class="hljs-comment">% ON Constraint:-pi + ui * min_outputi &lt;= 0</span>
+<span class="hljs-comment">% OFF Constraint:pi - ui * max_outputi &lt;= 0</span>
+<span class="hljs-comment">%ξk,t∙Pk,g,min ≤ Pk,g,t ≤ ξk,t∙Pk,g,max , ξk,t∙Qk,g,min ≤ Qk,g,t ≤ ξk,t∙Qk,g,max</span>
+Aineq=[Aineq;-<span class="hljs-built_in">diag</span>(<span class="hljs-built_in">ones</span>(<span class="hljs-number">10</span>,<span class="hljs-number">1</span>)),<span class="hljs-built_in">zeros</span>(<span class="hljs-number">10</span>,<span class="hljs-number">30</span>),<span class="hljs-built_in">diag</span>(xmin(<span class="hljs-number">1</span>:<span class="hljs-number">10</span>)),<span class="hljs-built_in">zeros</span>(<span class="hljs-number">10</span>,<span class="hljs-number">10</span>)];
+Aineq=[Aineq;<span class="hljs-built_in">diag</span>(<span class="hljs-built_in">ones</span>(<span class="hljs-number">10</span>,<span class="hljs-number">1</span>)),<span class="hljs-built_in">zeros</span>(<span class="hljs-number">10</span>,<span class="hljs-number">30</span>),-<span class="hljs-built_in">diag</span>(xmax(<span class="hljs-number">1</span>:<span class="hljs-number">10</span>)),<span class="hljs-built_in">zeros</span>(<span class="hljs-number">10</span>,<span class="hljs-number">10</span>)];
+bineq=[bineq;<span class="hljs-built_in">zeros</span>(<span class="hljs-number">20</span>,<span class="hljs-number">1</span>)];
+
+<span class="hljs-comment">% executing the integer programming</span>
+x6 = intlinprog(f,[<span class="hljs-number">41</span>:<span class="hljs-number">60</span>],Aineq,bineq,Aeq,beq,xmin,xmax);
+display(x6)
+</div></code></pre>
+<p><img src="image-11.png" alt="alt text"></p>
+
+</body>
+</html>
